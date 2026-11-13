@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'meryds-meeting-meter-';
-const CACHE = `${CACHE_PREFIX}v05`;
+const CACHE = `${CACHE_PREFIX}v06`;
 const ASSETS = ['./', './index.html', './app.js', './manifest.webmanifest', './icon-192-yen.png', './icon-512-yen.png', './meeting-room-hero.webp'];
 const SCOPE = new URL(self.registration.scope);
 const ASSET_URLS = new Set(ASSETS.map(path => new URL(path, SCOPE).href));
