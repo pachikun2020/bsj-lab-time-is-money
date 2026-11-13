@@ -9,7 +9,9 @@
   let segmentRate = 0, rafId = 0, sessionStart = null, sessionEnd = null, finished = false;
   const count = id => Number($(id).value);
   const validCount = id => $(id).value.trim() !== '' && Number.isInteger(count(id)) && count(id) >= 0 && count(id) <= 5000;
-  const valid = () => validCount('fullTime') && validCount('partTime') && count('fullTime') + count('partTime') > 0 && !!purposeLabels[$('meetingType').value];
+  const validPeople = () => validCount('fullTime') && validCount('partTime') && count('fullTime') + count('partTime') > 0;
+  const validPurpose = () => !!purposeLabels[$('meetingType').value];
+  const valid = () => validPeople() && validPurpose();
   const values = () => ({fullTime: count('fullTime'), partTime: count('partTime'), meetingType: $('meetingType').value, meetingGoal: $('meetingGoal').value.slice(0, 100), showDetails: $('showDetails').checked});
   const purposeLabels = {decision: '決定', share: '共有', dialogue: '対話'};
   const outcomeLabels = {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'};
@@ -21,7 +23,8 @@
   function save() { if (!valid()) return; try { localStorage.setItem(store, JSON.stringify(values())); } catch {} }
   function render() {
     const okay = valid(), rate = okay ? hourly(values()) : 0;
-    $('inputError').hidden = okay;
+    $('inputError').hidden = validPeople();
+    $('purposeError').hidden = validPurpose();
     $('elapsed').textContent = clock(duration());
     $('total').textContent = Math.round(total()).toLocaleString('ja-JP');
     $('rate').textContent = '現在の参加者で ' + yen(rate / 60) + ' / 分';

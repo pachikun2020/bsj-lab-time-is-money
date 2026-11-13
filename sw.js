@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'meryds-meeting-meter-';
-const CACHE = `${CACHE_PREFIX}v06`;
+const CACHE = `${CACHE_PREFIX}v08`;
 const ASSETS = ['./', './index.html', './app.js', './manifest.webmanifest', './icon-192-yen.png', './icon-512-yen.png', './meeting-room-hero.webp'];
 const SCOPE = new URL(self.registration.scope);
 const ASSET_URLS = new Set(ASSETS.map(path => new URL(path, SCOPE).href));
@@ -22,15 +22,13 @@ self.addEventListener('fetch', event => {
   if (url.origin !== SCOPE.origin || !url.pathname.startsWith(SCOPE.pathname)) return;
   if (!ASSET_URLS.has(url.href)) return;
   event.respondWith(caches.open(CACHE).then(async cache => {
-    if (event.request.mode === 'navigate') {
-      try {
-        const response = await fetch(event.request);
-        if (response.ok) event.waitUntil(cache.put(event.request, response.clone()));
-        return response;
-      } catch {
-        return (await cache.match(event.request)) || (await cache.match('./index.html'));
-      }
+    try {
+      const response = await fetch(event.request);
+      if (response.ok && response.type === 'basic') event.waitUntil(cache.put(event.request, response.clone()));
+      return response;
+    } catch {
+      return (await cache.match(event.request)) ||
+        (event.request.mode === 'navigate' ? await cache.match(new URL('./index.html', SCOPE).href) : Response.error());
     }
-    return (await cache.match(event.request)) || fetch(event.request);
   }));
 });
