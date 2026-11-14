@@ -1,4 +1,8 @@
-# 会議原価メーター — MERYDS BSJ LAB #001
+# Time is Money — Meeting Cost Counter | MERYDS BSJ LAB #001
+
+日本語・Englishを画面右上で切り替えられる、会議の推定人件費カウンターです。表示言語を変えても通貨は円、単価は日本向けの固定概算値のままです。公開ライセンスと公開URLは未決です。
+
+This prototype estimates meeting labor cost using fixed Japanese rates in yen. Switch between Japanese and English in the header. Language switching does not convert currency or localize labor rates. No public URL or open-source license has been approved.
 
 ## 目的
 会議の推定人件費をリアルタイムに表示し、「その会議は必要か？」を考えるきっかけにする。社内利用者を監視・評価するツールではありません。
@@ -16,6 +20,7 @@
 2. PWAのインストール・オフラインを利用するにはHTTPS（例: Cloudflare Pages）でディレクトリを公開します。
 3. ローカル検証は `python3 -m http.server 8000` で起動し `http://localhost:8000` にアクセスします。
 4. 内容・商標・ドメイン・利用規約を最終確認するまで本番公開はしません。
+5. Language choice is stored on this device. The English interface translates descriptions, controls, and CSV headings; monetary amounts stay in JPY.
 
 ## 算定式
 `(フルタイム人数 × 2,500円/時 + パートタイム人数 × 1,500円/時) × (経過秒 ÷ 3600)`
