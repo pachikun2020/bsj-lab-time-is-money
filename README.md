@@ -39,6 +39,14 @@ This local QA build offers Japanese, English and Simplified Chinese. All five co
 - 企業単位の集計は**利用者の同意・設計レビュー後**。初期版でクラウド連携しない
 - GitHub OSS公開の前にアクセシビリティ/スマホ/オフライン/セキュリティの最終QA
 
+## ローカルの配布候補作成（公開しない）
+
+`python3 tools/build_release.py --out ../release-prep-20261118/candidate-02`で、許可したアプリ資産だけの検証用パッケージを作成できます。出力先が既にある場合は上書きしません。アプリ用11資産に加え、Pages向けヘッダー案、404、robots.txtを含みます。社内資料・CSV・Git履歴・認証情報は含めません。
+
+`python3 tools/serve_release.py --site ../release-prep-20261118/candidate-02/site --port 8782`は127.0.0.1だけで待ち受け、同じヘッダー案をローカルで検証します。Cloudflareへの配置やDNS変更は行いません。
+
+ヘッダー案は検証専用ホストのルート配置を想定しています。BSJ LAB LPへそのまま混ぜないでください。noindexは検索抑止で、認証ではありません。検証用URLを外部に作る場合は、URL・アクセス制限を決めて別途承認が必要です。[Pagesのヘッダー仕様](https://developers.cloudflare.com/pages/configuration/headers/)、[HTMLと404の扱い](https://developers.cloudflare.com/pages/configuration/serving-pages/)を参照。
+
 ## 注意
 元の海外会議コストツールの構成を参考にした試作です。第三者素材・商標と権利は公開前に確認します。**未公開のプロトタイプ**です。
 

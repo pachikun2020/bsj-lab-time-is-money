@@ -1,0 +1,10 @@
+# Static Cloudflare Pages profile. Local draft; not deployed.
+# noindex is for a preview and is not an access-control mechanism.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
