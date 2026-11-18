@@ -10,6 +10,7 @@
   const ids = ['fullTime', 'partTime', 'participants', 'meetingType', 'meetingGoal', 'showDetails'];
   let running = false, elapsedMs = 0, accruedAmount = 0, checkpoint = 0;
   let segmentRate = 0, rafId = 0, sessionStart = null, sessionEnd = null, finished = false;
+  let moneyFitKey = '';
   const count = id => Number($(id).value);
   const validCount = id => $(id).value.trim() !== '' && Number.isInteger(count(id)) && count(id) >= 0 && count(id) <= 5000;
   const singleRate = () => Number.isFinite(profile()?.rates?.all);
@@ -74,7 +75,7 @@
     $('langZh').setAttribute('aria-pressed', String(language === 'zh'));
   }
   function setLanguage(next) {
-    if (!copy[next]) return;
+    if (!Object.hasOwn(copy, next)) return;
     language = next;
     try { localStorage.setItem(langStore, language); } catch {}
     applyCopy(); render();
@@ -92,6 +93,8 @@
     document.querySelector('.disclaimer').textContent = disclaimer(t);
     $('countryNotice').classList.toggle('input-error', !p.rates);
     $('inputError').hidden = validPeople();
+    for (const id of ['fullTime', 'partTime', 'participants']) $(id).setAttribute('aria-invalid', String(!validCount(id) || (singleRate() ? count('participants') === 0 : count('fullTime') + count('partTime') === 0)));
+    $('meetingType').setAttribute('aria-invalid', String(!validPurpose()));
     $('purposeError').hidden = validPurpose();
     $('elapsed').textContent = clock(duration());
     $('total').textContent = new Intl.NumberFormat(language === 'ja' ? 'ja-JP' : language === 'zh' ? 'zh-CN' : 'en-US', {maximumFractionDigits: p.currency === 'JPY' ? 0 : 2}).format(total());
@@ -109,6 +112,12 @@
     $('country').disabled = !!sessionStart;
     $('outcomeSection').hidden = !finished;
     document.querySelectorAll('.mini').forEach(e => { e.style.display = $('showDetails').checked ? '' : 'none'; });
+    const box = document.querySelector('.money');
+    const fitKey = [box.clientWidth, $('total').textContent.length, p.currency, document.body.classList.contains('focus-mode')].join(':');
+    if (fitKey !== moneyFitKey) {
+      moneyFitKey = fitKey; box.style.fontSize = '';
+      if (box.scrollWidth > box.clientWidth && box.clientWidth > 0) box.style.fontSize = Math.floor(parseFloat(getComputedStyle(box).fontSize) * box.clientWidth / box.scrollWidth * 0.98) + 'px';
+    }
   }
   function settle() {
     if (!running) return;
@@ -148,9 +157,9 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   try {
-    language = copy[localStorage.getItem(langStore)] ? localStorage.getItem(langStore) : 'ja';
+    language = Object.hasOwn(copy, localStorage.getItem(langStore)) ? localStorage.getItem(langStore) : 'ja';
     const storedCountry = localStorage.getItem(countryStore);
-    if (countries[storedCountry]) $('country').value = storedCountry;
+    if (Object.hasOwn(countries, storedCountry)) $('country').value = storedCountry;
     const old = JSON.parse(localStorage.getItem(store) || 'null');
     if (old && typeof old === 'object') for (const id of ids) if (Object.hasOwn(old, id)) {
       if (id === 'showDetails') $(id).checked = !!old[id]; else $(id).value = old[id];
@@ -171,7 +180,9 @@
   $('focusToggle').addEventListener('click', () => {
     document.body.classList.toggle('focus-mode');
     $('focusToggle').textContent = document.body.classList.contains('focus-mode') ? copy[language].action.unfocus : copy[language].action.focus;
+    render();
   });
+  window.addEventListener('resize', render);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
   applyCopy(); render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(() => {});
