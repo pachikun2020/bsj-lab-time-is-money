@@ -1,6 +1,6 @@
 window.TMM_I18N = {
   ja: {
-    gapQuestion: minutes => `前回の計測から約${minutes}分経っています。この時間を会議に加算しますか？選ぶまでは一時停止します。`,
+    gapQuestion: minutes => `前回の計測から約${minutes}分経っています。選択までの時間も会議に加算しますか？選択後に計測を再開します。`,
     includeGap: '経過時間を加算する', excludeGap: '加算せず続ける', segmentKind: '区間の種類', excludedSeconds: '加算しなかった秒数',
     editWarning: '人数の入力は欄を離れると確定します。確定するまでは直前の人数で計測を続けます。',
     sessionRestored: 'このタブの計測データを復元しました。自由記入のメモと成果の選択は復元されません。',
@@ -41,11 +41,11 @@ window.TMM_I18N = {
     essay2: ['会議の目的はコストをゼロにすることではありません。良い会議には価値があります。数値は', '削減可能な時間を見つけるための概算', 'であり、参加者個人の価値や発言量を評価するためのものではありません。'],
     disclaimer: '日本の計算式：フルタイム人数 × 2,500円/時 ＋ パートタイム人数 × 1,500円/時を経過時間に応じて積算。フルタイム2,500円には社会保険分を含み、パートタイム1,500円は固定の概算単価です。統計の中央値ではありません。表示は円建ての概算で、実際の賃金・法定福利費・機会費用や節約額を証明するものではありません。入力した値はこの端末内にのみ保存され、MERYDSへの送信や分析は行いません。CSVは端末内で生成します。',
     disclaimerIreland: 'アイルランドCSOの2022年Structure of Earnings Survey表4.2にある事務・秘書職の時給中央値を使用。フルタイム €18.24、パートタイム €16.66を人数と経過時間に応じて積算します。これは事務・秘書職の給与相当額であり、全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
-    footer: '試作 v0.6.2-qa · 利用条件確認中 · GitHub一般公開は未実施',
+    footer: '試作 v0.6.3-qa · 利用条件確認中 · GitHub一般公開は未実施',
     csv: {record: '会議記録', value: '値', start: '開始日時', end: '終了日時', purpose: '会議の目的区分', goal: '今日この会議で行うこと', outcome: '成果の確認', left: '残ったもの', fullTime: 'フルタイム人数', partTime: 'パートタイム人数', elapsed: '経過時間（秒）', cost: '推定会議人件費', formula: '算定方式', formulaValue: 'フルタイム人数×2500円/時＋パートタイム人数×1500円/時。人数変更は区間ごとに積算', unfinished: '未終了', purposeLabels: {decision: '決定', share: '共有', dialogue: '対話'}, outcomeLabels: {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'}}
   },
   en: {
-    gapQuestion: minutes => `About ${minutes} minutes have passed since the last checkpoint. Include this time in the meeting? The timer stays paused until you choose.`,
+    gapQuestion: minutes => `About ${minutes} minutes have passed since the last checkpoint. Include the gap up to the time you choose? The timer resumes after your choice.`,
     includeGap: 'Include elapsed gap', excludeGap: 'Continue without gap', segmentKind: 'Segment type', excludedSeconds: 'Excluded gap seconds',
     editWarning: 'Leave the participant field to apply your edit. Until then, the timer continues with the last confirmed participants.',
     sessionRestored: 'The timer in this tab was restored. Free-text notes and the outcome selection were not restored.',
@@ -86,11 +86,11 @@ window.TMM_I18N = {
     essay2: ['The goal is not to make meeting costs zero. Good meetings have value. This number is ', 'an estimate to help find time that could be saved', ', not a measure of any participant’s worth or contribution.'],
     disclaimer: 'Japan calculation: (full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour) × elapsed hours. These are fixed Japanese estimates, not statistical medians; the full-time rate includes a social-insurance allowance. Switching language does not change the calculation country or convert currency. The figure does not prove actual pay, benefits, opportunity cost, waste, or savings. Inputs remain on this device; this app does not send them to MERYDS or analytics. CSV files are generated on this device.',
     disclaimerIreland: 'Uses median hourly earnings for Administrative & Secretarial employees in Ireland, CSO Structure of Earnings Survey 2022 Table 4.2: €18.24 full-time and €16.66 part-time. The estimate is a wage equivalent for this occupation, not the median for all white-collar workers or the employer’s full cost. Inputs stay on this device and are not sent anywhere.',
-    footer: 'Prototype v0.6.2-qa · Terms pending · GitHub repository not public',
+    footer: 'Prototype v0.6.3-qa · Terms pending · GitHub repository not public',
     csv: {record: 'Meeting record', value: 'Value', start: 'Start time', end: 'End time', purpose: 'Meeting purpose', goal: 'What this meeting will do', outcome: 'Outcome', left: 'What came out of it', fullTime: 'Full-time participants', partTime: 'Part-time participants', elapsed: 'Elapsed time (seconds)', cost: 'Estimated labor cost', formula: 'Formula', formulaValue: 'Full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour. Participant changes accrue by segment.', unfinished: 'Not finished', purposeLabels: {decision: 'Decision', share: 'Information sharing', dialogue: 'Dialogue'}, outcomeLabels: {achieved: 'Achieved', partial: 'Partly achieved', none: 'Not achieved', unknown: 'Not sure yet'}}
   }
   ,zh: {
-    gapQuestion: minutes => `距离上次计时已过约 ${minutes} 分钟。要计入会议时间吗？选择前计时保持暂停。`,
+    gapQuestion: minutes => `距离上次计时已过约 ${minutes} 分钟。要将选择前的这段时间计入会议吗？选择后恢复计时。`,
     includeGap: '计入这段时间', excludeGap: '不计入并继续', segmentKind: '区间类型', excludedSeconds: '未计入的秒数',
     editWarning: '离开人数输入框后修改才会生效。在确认前，仍按上次确认的人数计时。',
     sessionRestored: '已恢复此标签页的计时数据。自由填写的备注和成果选项不会恢复。',
@@ -132,7 +132,7 @@ window.TMM_I18N = {
     essay2: ['目标不是让会议成本归零。好的会议有其价值。这个数字只是', '帮助发现可节省时间的估算值', '，不是评价参会者个人价值或贡献的依据。'],
     disclaimer: '日本计算方式：全职人数 × 每小时 ¥2,500 ＋ 兼职人数 × 每小时 ¥1,500，再按经过时间累计。全职单价含社会保险的估算额，兼职使用固定估算单价，均不代表统计中位数。金额不能证明实际工资、福利、机会成本或节省额。输入仅保存在本设备，不会发送给 MERYDS 或分析服务。CSV 在本设备生成。',
     disclaimerIreland: '使用爱尔兰 CSO《2022 年收入结构调查》表 4.2 的行政与秘书职业时薪中位数：全职 €18.24，兼职 €16.66，按人数和时长累计。该数值是这一职业的工资估算，并非所有白领的中位数或雇主总成本。输入仅保存在本设备，不会外传。',
-    footer: '试用版 v0.6.2-qa · 使用条款待确认 · GitHub 尚未公开',
+    footer: '试用版 v0.6.3-qa · 使用条款待确认 · GitHub 尚未公开',
     csv: {record: '会议记录', value: '数值', start: '开始时间', end: '结束时间', purpose: '会议目的', goal: '本次会议要完成什么', outcome: '会议成果', left: '取得了什么', fullTime: '全职人数', partTime: '兼职人数', elapsed: '经过时间（秒）', cost: '估算人力成本', formula: '计算方式', formulaValue: '全职人数 × ¥2,500/小时 ＋ 兼职人数 × ¥1,500/小时；人数变化按时段累计。', unfinished: '未结束', purposeLabels: {decision: '决策', share: '信息共享', dialogue: '讨论'}, outcomeLabels: {achieved: '达成', partial: '部分达成', none: '未达成', unknown: '尚不确定'}}
   }
 

@@ -124,6 +124,7 @@
     $('start').textContent = running ? t.action.running : duration() > 0 ? t.action.resume : t.action.start;
     $('start').disabled = running || finished || !okay || recoveryGapMs > 0;
     $('pause').disabled = !running;
+    $('focusToggle').disabled = recoveryGapMs > 0;
     $('finish').disabled = !sessionStart || finished || recoveryGapMs > 0;
     $('export').disabled = duration() <= 0 || (finished && !$('outcomeStatus').value) || recoveryGapMs > 0;
     $('meetingType').disabled = !!sessionStart;
@@ -154,7 +155,11 @@
     }
     checkpoint = now;
   }
-  function tick(timestamp = 0) { if (timestamp - lastTick >= 250 || !lastTick) { render(); lastTick = timestamp; } if (running) rafId = requestAnimationFrame(tick); }
+  function tick(timestamp = 0) {
+    if (running && Date.now() - checkpoint >= 15000) { settle(); persistSession(); }
+    if (timestamp - lastTick >= 250 || !lastTick) { render(); lastTick = timestamp; }
+    if (running) rafId = requestAnimationFrame(tick);
+  }
   function start() {
     if (running || finished || !valid()) return;
     running = true; if (!sessionStart) sessionStart = new Date(); sessionEnd = null;
@@ -189,7 +194,7 @@
     function tSource() { return copy[language].csvSource; }
     lines.push([], [c.record, copy[language].segmentHeading], [copy[language].segmentHeading, copy[language].segmentOffset, c.elapsed, copy[language].participants, c.fullTime, c.partTime, copy[language].csvHourlyRate, c.cost, copy[language].csvCurrency, copy[language].segmentKind, copy[language].excludedSeconds]);
     segments.forEach((s, i) => lines.push([i + 1, (s.offsetMs / 1000).toFixed(3), (s.ms / 1000).toFixed(3), singleRate() ? s.people.participants : s.people.fullTime + s.people.partTime, singleRate() ? '' : s.people.fullTime, singleRate() ? '' : s.people.partTime, s.rate, s.amount.toFixed(6), p.currency, s.kind || 'measured', (s.excludedMs || 0) / 1000]));
-    const safe = x => { let s = String(x ?? ''); if (/^\s*[=+@\-]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+    const safe = x => { let s = String(x ?? ''); if (/^\s*[=+@\-＝＋－＠]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
     const blob = new Blob(['\ufeff' + lines.map(row => row.map(safe).join(',')).join('\r\n')], {type: 'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = 'time-is-money-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
@@ -247,9 +252,13 @@
   window.addEventListener('beforeunload', e => { persistSession(); if (sessionStart) { e.preventDefault(); e.returnValue = ''; } });
   function resolveGap(include) {
     if (recoveryGapMs <= 0 || !activePeople) return;
-    const ms = include ? recoveryGapMs : 0, amount = segmentRate * ms / 3600000;
-    segments.push({kind: include ? 'confirmed-restored-gap' : 'excluded-restored-gap', offsetMs: elapsedMs, ms, people: {...activePeople}, rate: segmentRate, amount, excludedMs: include ? 0 : recoveryGapMs});
-    elapsedMs += ms; accruedAmount += amount; recoveryGapMs = 0; checkpoint = Date.now(); if (include) sessionEnd = new Date(); persistSession(); render();
+    const now = Date.now(), gap = Math.max(0, now - checkpoint);
+    const ms = include ? gap : 0, amount = segmentRate * ms / 3600000;
+    segments.push({kind: include ? 'confirmed-restored-gap' : 'excluded-restored-gap', offsetMs: elapsedMs, ms, people: {...activePeople}, rate: segmentRate, amount, excludedMs: include ? 0 : gap});
+    elapsedMs += ms; accruedAmount += amount; recoveryGapMs = 0; checkpoint = now;
+    if (include) sessionEnd = new Date(now);
+    if (valid()) { activePeople = people(); segmentRate = hourly(activePeople); running = true; sessionEnd = null; }
+    persistSession(); render(); if (running) tick();
   }
   $('includeGap').addEventListener('click', () => resolveGap(true));
   $('excludeGap').addEventListener('click', () => resolveGap(false));
