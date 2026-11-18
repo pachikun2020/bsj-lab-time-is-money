@@ -15,7 +15,7 @@
   const validPeople = () => validCount('fullTime') && validCount('partTime') && count('fullTime') + count('partTime') > 0;
   const validPurpose = () => !!purposeLabels[$('meetingType').value];
   const profile = () => countries[$('country').value];
-  const rateNote = t => profile().status === 'verified-median' ? t.rateIreland : profile().rates ? t.rateProvisional : t.ratePending;
+  const rateNote = t => profile().status === 'verified-median' ? ($('country').value === 'gb' ? t.rateUK : t.rateIreland) : profile().rates ? t.rateProvisional : t.ratePending;
   const valid = () => validPeople() && validPurpose() && !!profile()?.rates;
   const values = () => ({fullTime: count('fullTime'), partTime: count('partTime'), meetingType: $('meetingType').value, meetingGoal: $('meetingGoal').value.slice(0, 100), showDetails: $('showDetails').checked});
   const purposeLabels = {decision: '決定', share: '共有', dialogue: '対話'};
@@ -62,7 +62,7 @@
     put('.essay section:first-child h2', t.essay1Title); put('.essay .question', t.essay1Question);
     put('.essay section:first-child p:last-child', t.essay1);
     put('.essay section:nth-child(2) h2', t.essay2Title); rich('.essay section:nth-child(2) p', t.essay2);
-    put('.disclaimer', $('country').value === 'ie' ? t.disclaimerIreland : t.disclaimer); put('footer span:last-child', t.footer);
+    put('.disclaimer', $('country').value === 'gb' ? t.disclaimerUK : $('country').value === 'ie' ? t.disclaimerIreland : t.disclaimer); put('footer span:last-child', t.footer);
     $('pause').textContent = t.action.pause; $('finish').textContent = t.action.finish;
     $('reset').textContent = t.action.reset; $('export').textContent = t.action.export;
     $('focusToggle').textContent = document.body.classList.contains('focus-mode') ? t.action.unfocus : t.action.focus;
@@ -83,7 +83,7 @@
     $('currencySymbol').textContent = p.symbol;
     $('currencyCode').textContent = p.currency;
     $('countryNotice').textContent = rateNote(t);
-    document.querySelector('.disclaimer').textContent = $('country').value === 'ie' ? t.disclaimerIreland : t.disclaimer;
+    document.querySelector('.disclaimer').textContent = $('country').value === 'gb' ? t.disclaimerUK : $('country').value === 'ie' ? t.disclaimerIreland : t.disclaimer;
     $('countryNotice').classList.toggle('input-error', !p.rates);
     $('inputError').hidden = validPeople();
     $('purposeError').hidden = validPurpose();

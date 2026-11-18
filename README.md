@@ -1,8 +1,8 @@
-# TIME IS MONEY 〜会議の値段可視化アプリ〜 | MERYDS BSJ LAB #001
+# Time is Money 〜会議の値段可視化アプリ〜 | MERYDS BSJ LAB #001
 
-日本語・English・简体中文を切り替えられる、会議の推定人件費カウンターです。計算対象国は日本（JPY）、米国（USD）、英国（GBP）、アイルランド（EUR）、中国（CNY）から選択できます。現時点で計測可能なのは日本の暫定単価と、アイルランドCSO 2022年の事務・秘書職の時給中央値です。米英中は出典確認中で開始不可です。表示言語と計算対象国は独立しています。公開ライセンスと公開URLは未決です。
+日本語・English・简体中文を切り替えられる、会議の推定人件費カウンターです。計算対象国は日本（JPY）、米国（USD）、英国（GBP）、アイルランド（EUR）、中国（CNY）から選択できます。現時点で計測可能なのは日本の暫定単価と、英国ONS・アイルランドCSOの事務・秘書職の時給中央値です。米国・中国は出典確認中で開始不可です。表示言語と計算対象国は独立しています。公開ライセンスと公開URLは未決です。
 
-This local QA build offers Japanese, English and Simplified Chinese. Japan uses provisional rates, while Ireland uses the 2022 CSO median hourly earnings for Administrative & Secretarial workers. US, UK and China rates are pending source verification, so their timers are disabled.
+This local QA build offers Japanese, English and Simplified Chinese. Japan uses provisional rates, while the UK and Ireland use occupational median hourly earnings from ONS and CSO. US and China rates are pending source verification, so their timers are disabled.
 
 ## 目的
 会議の推定人件費をリアルタイムに表示し、「その会議は必要か？」を考えるきっかけにする。社内利用者を監視・評価するツールではありません。
@@ -23,7 +23,7 @@ This local QA build offers Japanese, English and Simplified Chinese. Japan uses 
 5. Language and country choice are stored on this device. Language changes do not convert currency. A running meeting locks its country until reset.
 
 ## 算定式
-日本はCE仮置きであり、統計中央値ではありません。アイルランドは[CSO Structure of Earnings Survey 2022 表4.2](https://www.cso.ie/en/releasesandpublications/ep/p-ses/structureofearningssurvey2022/occupationandeducation/)のAdministrative & Secretarial職種：フルタイム€18.24/時、パートタイム€16.66/時。職種群を合算したホワイトカラー全体の中央値ではありません。
+日本はCE仮置きであり、統計中央値ではありません。英国は[ONS ASHE Table 14.6a 2025 revised](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14)のAdministrative and secretarial occupations：フルタイム£15.81/時、パートタイム£14.03/時（残業代を除く中央値）。アイルランドは[CSO Structure of Earnings Survey 2022 表4.2](https://www.cso.ie/en/releasesandpublications/ep/p-ses/structureofearningssurvey2022/occupationandeducation/)のAdministrative & Secretarial職種：フルタイム€18.24/時、パートタイム€16.66/時。いずれもホワイトカラー全体の中央値ではありません。
 `(フルタイム人数 × 2,500円/時 + パートタイム人数 × 1,500円/時) × (経過秒 ÷ 3600)`
 フルタイムの固定単価には社会保険分を含む概算です。人数が計測中に変わる場合は、各区間の原価を積算します。
 会議の目的・人数・表示設定・計算対象国・表示言語はこの端末のlocalStorageに保存します。終了後の成果確認とメモは保存せず、必要ならCSVを出力します。

@@ -1,11 +1,13 @@
 window.TMM_I18N = {
   ja: {
-    title: 'TIME IS MONEY 〜会議の値段可視化アプリ〜 | MERYDS',
+    title: 'Time is Money 〜会議の値段可視化アプリ〜 | MERYDS',
     langLabel: '表示言語',
     description: '会議に投入する推定人件費をリアルタイムで可視化する無料PWA。登録不要。',
     header: '無料 / 登録不要 / 個人給与データ不要 / オフライン対応',
     hero: ['カイギの時間は', 'タダじゃない。', 'いま、いくら使ってる？'],
     heroSub: ['会議の人件費をその場で可視化。社員を責めるためではなく、', '会議をなくす・短くする・少人数にする', '判断のために。'],
+    rateUK: '英国ONS 2025年改訂、事務・秘書職の残業代を除く時給中央値：フルタイム £15.81、パートタイム £14.03。全ホワイトカラーの中央値ではありません。',
+    disclaimerUK: '英国ONSのASHE 2025年改訂表14.6a（281行）にある事務・秘書職の残業代を除く時給中央値を使用。フルタイム £15.81、パートタイム £14.03を人数と経過時間に応じて積算。全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
     countryNames: {jp: '日本', us: '米国', gb: '英国', ie: 'アイルランド', cn: '中国'},
     country: '計算対象国', rateProvisional: '日本の暫定単価：フルタイム ¥2,500/時、パートタイム ¥1,500/時。統計の中央値ではありません。', rateIreland: 'アイルランドCSO 2022年、事務・秘書職の時給中央値：フルタイム €18.24、パートタイム €16.66。全ホワイトカラーの中央値ではありません。', ratePending: 'この国の時給中央値は出典確認中です。計測はまだ開始できません。', csvCountry: '計算対象国', csvCurrency: '通貨', csvRateStatus: '単価の確認状況', csvSource: '単価の出典',
     settings: '01 / 会議の条件を入力', fullTime: 'フルタイム人数', partTime: 'パートタイム人数',
@@ -30,12 +32,14 @@ window.TMM_I18N = {
     csv: {record: '会議記録', value: '値', start: '開始日時', end: '終了日時', purpose: '会議の目的区分', goal: '今日この会議で行うこと', outcome: '成果の確認', left: '残ったもの', fullTime: 'フルタイム人数', partTime: 'パートタイム人数', elapsed: '経過時間（秒）', cost: '推定会議人件費', formula: '算定方式', formulaValue: 'フルタイム人数×2500円/時＋パートタイム人数×1500円/時。人数変更は区間ごとに積算', unfinished: '未終了', purposeLabels: {decision: '決定', share: '共有', dialogue: '対話'}, outcomeLabels: {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'}}
   },
   en: {
-    title: 'TIME IS MONEY — Meeting Cost Counter | MERYDS',
+    title: 'Time is Money — Meeting Cost Counter | MERYDS',
     langLabel: 'Language',
     description: 'A free PWA that estimates meeting labor cost in real time. No account or individual salary data.',
     header: 'Free / No sign-up / No individual salary data / Offline ready',
     hero: ['Meeting time', ' is not free.', 'What is this one costing?'],
     heroSub: ['See the estimated labor cost of a meeting as it happens. Use it to consider whether to ', 'skip, shorten, or shrink a meeting', '—not to judge employees.'],
+    rateUK: 'UK ONS ASHE 2025 revised, median hourly pay excluding overtime for Administrative and secretarial occupations: £15.81 full-time, £14.03 part-time. Not the median for all white-collar workers.',
+    disclaimerUK: 'Uses UK ONS ASHE Table 14.6a, 2025 revised, row 281: median hourly pay excluding overtime for Administrative and secretarial occupations, £15.81 full-time and £14.03 part-time. This is a wage equivalent for this occupation, not the median for all white-collar workers or the employer’s full cost. Inputs stay on this device and are not sent anywhere.',
     countryNames: {jp: 'Japan', us: 'United States', gb: 'United Kingdom', ie: 'Ireland', cn: 'China'},
     country: 'Calculation country', rateProvisional: 'Japan provisional rates: full-time ¥2,500/hour, part-time ¥1,500/hour. These are not statistical medians.', rateIreland: 'Ireland CSO 2022 median hourly earnings for Administrative & Secretarial employees: full-time €18.24, part-time €16.66. This is not the median for all white-collar workers.', ratePending: 'The median wage source for this country is still being verified. The timer cannot start yet.', csvCountry: 'Calculation country', csvCurrency: 'Currency', csvRateStatus: 'Rate status', csvSource: 'Rate source',
     settings: '01 / Set up this meeting', fullTime: 'Full-time participants', partTime: 'Part-time participants',
@@ -60,11 +64,13 @@ window.TMM_I18N = {
     csv: {record: 'Meeting record', value: 'Value', start: 'Start time', end: 'End time', purpose: 'Meeting purpose', goal: 'What this meeting will do', outcome: 'Outcome', left: 'What came out of it', fullTime: 'Full-time participants', partTime: 'Part-time participants', elapsed: 'Elapsed time (seconds)', cost: 'Estimated labor cost', formula: 'Formula', formulaValue: 'Full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour. Participant changes accrue by segment.', unfinished: 'Not finished', purposeLabels: {decision: 'Decision', share: 'Information sharing', dialogue: 'Dialogue'}, outcomeLabels: {achieved: 'Achieved', partial: 'Partly achieved', none: 'Not achieved', unknown: 'Not sure yet'}}
   }
   ,zh: {
-    title: 'TIME IS MONEY｜会议价格可视化｜MERYDS', langLabel: '显示语言',
+    title: 'Time is Money｜会议价格可视化｜MERYDS', langLabel: '显示语言',
     description: '实时显示会议的人力成本估算值。无需注册或输入个人工资。',
     header: '免费 / 无需注册 / 无需个人工资数据 / 支持离线',
     hero: ['开会的时间', '不是免费的。', '这场会议花了多少？'],
     heroSub: ['实时查看会议的人力成本估算值。用于思考如何', '取消、缩短会议或减少参会人数', '，而不是评价员工。'],
+    rateUK: '英国 ONS 2025 年修订数据，行政与秘书职业不含加班费的时薪中位数：全职 £15.81，兼职 £14.03。这不代表所有白领的中位数。',
+    disclaimerUK: '使用英国 ONS ASHE 2025 年修订版表 14.6a 第 281 行的行政与秘书职业时薪中位数（不含加班费）：全职 £15.81，兼职 £14.03。该数值不是所有白领的中位数，也不是雇主总成本。输入仅保存在本设备，不会外传。',
     countryNames: {jp: '日本', us: '美国', gb: '英国', ie: '爱尔兰', cn: '中国'},
     country: '计算国家', rateProvisional: '日本暂定单价：全职每小时 ¥2,500，兼职每小时 ¥1,500。这不是统计中位数。', rateIreland: '爱尔兰 CSO 2022 年行政与秘书职业时薪中位数：全职 €18.24，兼职 €16.66。这不代表所有白领的中位数。',
     ratePending: '该国工资中位数的数据来源仍在核实，暂时无法开始计时。',
