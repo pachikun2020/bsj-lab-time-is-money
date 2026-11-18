@@ -1,8 +1,8 @@
 // A rate is enabled only after its population, unit and primary source are verified.
 window.TMM_COUNTRIES = Object.freeze({
   jp: {currency: 'JPY', symbol: '¥', rates: {fullTime: 2500, partTime: 1500}, status: 'provisional', year: null, population: 'CE provisional assumptions; not national medians', source: null},
-  us: {currency: 'USD', symbol: '$', rates: null, status: 'source-pending'},
+  us: {currency: 'USD', symbol: '$', rates: {all: 22.81}, status: 'verified-median', year: 2025, population: 'Office and administrative support occupations, all employment types, BLS OEWS May 2025', source: 'https://www.bls.gov/news.release/ocwage.t01.htm'},
   gb: {currency: 'GBP', symbol: '£', rates: {fullTime: 15.81, partTime: 14.03}, status: 'verified-median', year: 2025, population: 'Administrative and secretarial occupations (SOC 20 code 4), UK employee jobs, hourly pay excluding overtime, full-time/part-time, ASHE Table 14.6a 2025 revised row 281', source: 'https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14'},
   ie: {currency: 'EUR', symbol: '€', rates: {fullTime: 18.24, partTime: 16.66}, status: 'verified-median', year: 2022, population: 'Administrative & Secretarial employees, full-time/part-time, Structure of Earnings Survey 2022 Table 4.2', source: 'https://www.cso.ie/en/releasesandpublications/ep/p-ses/structureofearningssurvey2022/occupationandeducation/'},
-  cn: {currency: 'CNY', symbol: '¥', rates: null, status: 'source-pending'}
+  cn: {currency: 'CNY', symbol: '¥', rates: {all: 66200 / 2080}, status: 'annual-median-proxy', year: 2024, annualMedian: 66200, annualHours: 2080, population: 'Administrative affairs and support personnel (301), enterprise employees, MOHRSS Enterprise Salary Survey 2024 Table 1-1; annual wage includes bonuses, allowances and overtime. Hourly proxy assumes 40 hours/week × 52 weeks, without holiday adjustment; not an observed hourly median or a full-time/part-time breakdown.', source: 'https://www.mohrss.gov.cn/SYrlzyhshbzb/laodongguanxi_/fwyd/202506/t20250627_544623.html'}
 });

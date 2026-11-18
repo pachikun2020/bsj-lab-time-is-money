@@ -1,5 +1,10 @@
 window.TMM_I18N = {
   ja: {
+    participants: '参加人数（合計）',
+    rateUS: '米国BLS 2025年5月、事務・管理支援職の時給中央値：$22.81。フル／パートを合わせた職種全体の値で計算します。',
+    disclaimerUS: '米国BLS OEWS 2025年5月の事務・管理支援職の時給中央値$22.81に、合計人数と経過時間を掛けて積算します。全ホワイトカラーの中央値や雇用主の総原価ではありません。フル／パート別の単価は設定していません。入力は端末内にのみ保存され、送信されません。',
+    rateChina: '中国人社部2024年、行政事務・補助職の年収中央値66,200元 ÷ 仮定の年2,080時間＝約31.83元/時。時給中央値の実測値ではありません。',
+    disclaimerChina: '中国人社部「企業薪酬調査情報（2024年）」表1-1、職業301の年収50分位値6.62万元を使用。賞与・手当・残業代等を含む年収中央値を、週40時間×52週＝年2,080時間（休日調整なしの仮定）で割った時給目安です。フル／パート別ではなく合計人数で計算します。全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
     title: 'Time is Money 〜会議の値段可視化アプリ〜 | MERYDS',
     langLabel: '表示言語',
     description: '会議に投入する推定人件費をリアルタイムで可視化する無料PWA。登録不要。',
@@ -32,6 +37,11 @@ window.TMM_I18N = {
     csv: {record: '会議記録', value: '値', start: '開始日時', end: '終了日時', purpose: '会議の目的区分', goal: '今日この会議で行うこと', outcome: '成果の確認', left: '残ったもの', fullTime: 'フルタイム人数', partTime: 'パートタイム人数', elapsed: '経過時間（秒）', cost: '推定会議人件費', formula: '算定方式', formulaValue: 'フルタイム人数×2500円/時＋パートタイム人数×1500円/時。人数変更は区間ごとに積算', unfinished: '未終了', purposeLabels: {decision: '決定', share: '共有', dialogue: '対話'}, outcomeLabels: {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'}}
   },
   en: {
+    participants: 'Participants (total)',
+    rateUS: 'US BLS May 2025, Office and administrative support occupations: median $22.81/hour, combining full-time and part-time workers.',
+    disclaimerUS: 'Uses the US BLS OEWS May 2025 median hourly wage of $22.81 for Office and administrative support occupations, multiplied by total participants and elapsed hours. This is an occupational wage estimate, not the median for all white-collar workers or total employer cost. No separate full-time/part-time rates are assumed. Inputs stay on this device and are not sent anywhere.',
+    rateChina: 'China MOHRSS 2024, administrative affairs and support personnel: annual median CNY 66,200 / assumed 2,080 hours = about CNY 31.83/hour. This is a proxy, not an observed hourly median.',
+    disclaimerChina: 'Uses the 50th percentile annual wage of CNY 66,200 for occupation 301 in MOHRSS Enterprise Salary Survey 2024 Table 1-1. Annual wages include bonuses, allowances and overtime. The hourly proxy assumes 40 hours/week x 52 weeks = 2,080 hours, without holiday adjustment. Uses total participants; no full-time/part-time split. This is not the median for all white-collar workers or total employer cost. Inputs stay on this device and are not sent anywhere.',
     title: 'Time is Money — Meeting Cost Counter | MERYDS',
     langLabel: 'Language',
     description: 'A free PWA that estimates meeting labor cost in real time. No account or individual salary data.',
@@ -64,6 +74,11 @@ window.TMM_I18N = {
     csv: {record: 'Meeting record', value: 'Value', start: 'Start time', end: 'End time', purpose: 'Meeting purpose', goal: 'What this meeting will do', outcome: 'Outcome', left: 'What came out of it', fullTime: 'Full-time participants', partTime: 'Part-time participants', elapsed: 'Elapsed time (seconds)', cost: 'Estimated labor cost', formula: 'Formula', formulaValue: 'Full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour. Participant changes accrue by segment.', unfinished: 'Not finished', purposeLabels: {decision: 'Decision', share: 'Information sharing', dialogue: 'Dialogue'}, outcomeLabels: {achieved: 'Achieved', partial: 'Partly achieved', none: 'Not achieved', unknown: 'Not sure yet'}}
   }
   ,zh: {
+    participants: '参会总人数',
+    rateUS: '美国 BLS 2025 年 5 月办公及行政支持职业时薪中位数：$22.81，包含全职和兼职。',
+    disclaimerUS: '使用美国 BLS OEWS 2025 年 5 月办公及行政支持职业时薪中位数 $22.81，按参会总人数和时长累计。未设置全职与兼职的不同单价。这不是所有白领的中位数，也不是雇主总成本。输入仅保存在本设备，不会外传。',
+    rateChina: '人社部 2024 年行政办事及辅助人员年工资中位数 66,200 元 ÷ 假设的全年 2,080 小时＝约 31.83 元/小时。这不是实测时薪中位数。',
+    disclaimerChina: '使用人社部《企业薪酬调查信息（2024年）》表 1-1 职业 301 的工资 50% 分位值 6.62 万元/年，包含奖金、津贴、加班工资等。时薪估算假设每周 40 小时×52 周＝全年 2,080 小时，未调整节假日。按参会总人数计算，不区分全职与兼职。这不是所有白领的中位数，也不是雇主总成本。输入仅保存在本设备，不会外传。',
     title: 'Time is Money｜会议价格可视化｜MERYDS', langLabel: '显示语言',
     description: '实时显示会议的人力成本估算值。无需注册或输入个人工资。',
     header: '免费 / 无需注册 / 无需个人工资数据 / 支持离线',
