@@ -13,7 +13,7 @@
   let running = false, elapsedMs = 0, accruedAmount = 0, checkpoint = 0;
   let segmentRate = 0, rafId = 0, sessionStart = null, sessionEnd = null, finished = false;
   let moneyFitKey = '';
-  let segments = [], activePeople = null, exported = false, restored = false, lastTick = 0;
+  let segments = [], activePeople = null, restored = false, lastTick = 0, recoveryGapMs = 0;
   const count = id => Number($(id).value);
   const validCount = id => $(id).value.trim() !== '' && Number.isInteger(count(id)) && count(id) >= 0 && count(id) <= 5000;
   const singleRate = () => Number.isFinite(profile()?.rates?.all);
@@ -36,7 +36,7 @@
   function persistSession() {
     try {
       if (!sessionStart) { sessionStorage.removeItem(sessionStore); return; }
-      sessionStorage.setItem(sessionStore, JSON.stringify({version: 1, country: $('country').value, purpose: $('meetingType').value, running, finished, elapsedMs, accruedAmount, checkpoint, activePeople, segments, sessionStart: sessionStart.toISOString(), sessionEnd: sessionEnd?.toISOString() || null}));
+      sessionStorage.setItem(sessionStore, JSON.stringify({version: 1, country: $('country').value, purpose: $('meetingType').value, running, finished, elapsedMs, accruedAmount, checkpoint, activePeople, segments, recoveryGapMs, sessionStart: sessionStart.toISOString(), sessionEnd: sessionEnd?.toISOString() || null}));
     } catch {}
   }
   function commitPeople() {
@@ -85,6 +85,7 @@
     put('.disclaimer', disclaimer(t)); put('footer span:last-child', t.footer);
     put('#inputWarning', t.editWarning); put('#sessionNotice', t.sessionRestored);
     put('#timeCaution', t.timeCaution);
+    put('#includeGap', t.includeGap); put('#excludeGap', t.excludeGap);
     $('pause').textContent = t.action.pause; $('finish').textContent = t.action.finish;
     $('reset').textContent = t.action.reset; $('export').textContent = t.action.export;
     $('focusToggle').textContent = document.body.classList.contains('focus-mode') ? t.action.unfocus : t.action.focus;
@@ -121,17 +122,19 @@
     $('indicator').classList.toggle('run', running);
     $('status').textContent = finished ? t.status.finished : running ? t.status.running : duration() > 0 ? t.status.paused : t.status.ready;
     $('start').textContent = running ? t.action.running : duration() > 0 ? t.action.resume : t.action.start;
-    $('start').disabled = running || finished || !okay;
+    $('start').disabled = running || finished || !okay || recoveryGapMs > 0;
     $('pause').disabled = !running;
-    $('finish').disabled = !sessionStart || finished;
-    $('export').disabled = duration() <= 0 || (finished && !$('outcomeStatus').value);
+    $('finish').disabled = !sessionStart || finished || recoveryGapMs > 0;
+    $('export').disabled = duration() <= 0 || (finished && !$('outcomeStatus').value) || recoveryGapMs > 0;
     $('meetingType').disabled = !!sessionStart;
-    $('meetingGoal').disabled = !!sessionStart;
+    $('meetingGoal').disabled = !!sessionStart && !restored;
     $('country').disabled = !!sessionStart;
     for (const id of ['fullTime', 'partTime', 'participants']) $(id).disabled = finished;
     $('outcomeSection').hidden = !finished;
     $('inputWarning').hidden = !running || (validPeople() && samePeople(activePeople, people()));
     $('sessionNotice').hidden = !restored;
+    $('gapPrompt').hidden = recoveryGapMs <= 0;
+    $('gapMessage').textContent = recoveryGapMs > 0 ? t.gapQuestion(Math.round(recoveryGapMs / 60000)) : '';
     document.querySelectorAll('.mini').forEach(e => { e.style.display = $('showDetails').checked ? '' : 'none'; });
     const box = document.querySelector('.money');
     const fitKey = [box.clientWidth, $('total').textContent.length, p.currency, document.body.classList.contains('focus-mode')].join(':');
@@ -140,14 +143,13 @@
       if (box.scrollWidth > box.clientWidth && box.clientWidth > 0) box.style.fontSize = Math.floor(parseFloat(getComputedStyle(box).fontSize) * box.clientWidth / box.scrollWidth * 0.98) + 'px';
     }
   }
-  function settle() {
+  function settle(kind = 'measured') {
     if (!running) return;
     const now = Date.now(), delta = Math.max(0, now - checkpoint);
     if (delta > 0) {
-      exported = false;
       const amount = segmentRate * delta / 3600000, previous = segments.at(-1);
-      if (previous && previous.rate === segmentRate && samePeople(previous.people, activePeople)) { previous.ms += delta; previous.amount += amount; }
-      else segments.push({offsetMs: elapsedMs, ms: delta, people: {...activePeople}, rate: segmentRate, amount});
+      if (previous && (previous.kind || 'measured') === kind && previous.rate === segmentRate && samePeople(previous.people, activePeople)) { previous.ms += delta; previous.amount += amount; }
+      else segments.push({kind, offsetMs: elapsedMs, ms: delta, people: {...activePeople}, rate: segmentRate, amount});
       elapsedMs += delta; accruedAmount += amount;
     }
     checkpoint = now;
@@ -156,12 +158,13 @@
   function start() {
     if (running || finished || !valid()) return;
     running = true; if (!sessionStart) sessionStart = new Date(); sessionEnd = null;
-    activePeople = people(); segmentRate = hourly(activePeople); checkpoint = Date.now(); exported = false; save(); persistSession(); tick();
+    activePeople = people(); segmentRate = hourly(activePeople); checkpoint = Date.now(); save(); persistSession(); tick();
   }
   function pause() { if (!running) return; commitPeople(); settle(); running = false; cancelAnimationFrame(rafId); sessionEnd = new Date(); persistSession(); render(); }
   function finish() {
     if (!sessionStart || finished) return;
-    pause(); finished = true; exported = false; sessionEnd = new Date();
+    pause(); finished = true; sessionEnd = new Date();
+    if (activePeople) for (const id of singleRate() ? ['participants'] : ['fullTime', 'partTime']) $(id).value = activePeople[id];
     document.body.classList.remove('focus-mode');
     $('focusToggle').textContent = copy[language].action.focus;
     persistSession();
@@ -169,29 +172,28 @@
     $('outcomeStatus').focus();
   }
   function reset() {
-    if (sessionStart && (running || !exported) && !window.confirm(copy[language].confirmReset)) return;
+    if (sessionStart && !window.confirm(copy[language].confirmReset)) return;
     pause(); elapsedMs = 0; accruedAmount = 0; sessionStart = null; sessionEnd = null; finished = false;
-    segments = []; activePeople = null; restored = false; exported = false;
+    segments = []; activePeople = null; restored = false; recoveryGapMs = 0;
     $('meetingType').value = ''; $('meetingGoal').value = '';
     $('outcomeStatus').value = ''; $('outcomeNote').value = ''; persistSession(); render();
   }
   function csv() {
     commitPeople();
     if (running) { settle(); persistSession(); }
-    const o = values(), c = copy[language].csv, p = profile();
+    const o = {...values(), ...(activePeople || people())}, c = copy[language].csv, p = profile();
     const lines = [[c.record, c.value], [tCountry(), $('country').value], [tCurrency(), p.currency], [tRateStatus(), p.status], [tSource(), p.source || 'CE provisional assumptions'], ['Survey year', p.year || ''], ['Population', p.population || ''], [c.start, sessionStart?.toISOString() || ''], [c.end, (running ? new Date() : sessionEnd || new Date()).toISOString()], [c.purpose, c.purposeLabels[o.meetingType]], [c.goal, o.meetingGoal], [c.outcome, finished ? c.outcomeLabels[$('outcomeStatus').value] || '' : c.unfinished], [c.left, finished ? $('outcomeNote').value.slice(0, 300) : ''], ...(singleRate() ? [[copy[language].participants, o.participants]] : [[c.fullTime, o.fullTime], [c.partTime, o.partTime]]), [c.elapsed, (duration() / 1000).toFixed(1)], [c.cost, total().toFixed(p.currency === 'JPY' ? 0 : 2)], [c.formula, singleRate() ? `participants x ${p.rates.all} ${p.currency}/hour; annualMedian=${p.annualMedian || 'n/a'}; assumedAnnualHours=${p.annualHours || 'n/a'}; participant changes accrue by segment` : `full-time × ${p.rates.fullTime} ${p.currency}/hour + part-time × ${p.rates.partTime} ${p.currency}/hour; participant changes accrue by segment`]];
     function tCountry() { return copy[language].csvCountry; }
     function tCurrency() { return copy[language].csvCurrency; }
     function tRateStatus() { return copy[language].csvRateStatus; }
     function tSource() { return copy[language].csvSource; }
-    lines.push([], [c.record, copy[language].segmentHeading], [copy[language].segmentHeading, copy[language].segmentOffset, c.elapsed, copy[language].participants, c.fullTime, c.partTime, copy[language].csvHourlyRate, c.cost, copy[language].csvCurrency]);
-    segments.forEach((s, i) => lines.push([i + 1, (s.offsetMs / 1000).toFixed(3), (s.ms / 1000).toFixed(3), singleRate() ? s.people.participants : s.people.fullTime + s.people.partTime, singleRate() ? '' : s.people.fullTime, singleRate() ? '' : s.people.partTime, s.rate, s.amount.toFixed(6), p.currency]));
+    lines.push([], [c.record, copy[language].segmentHeading], [copy[language].segmentHeading, copy[language].segmentOffset, c.elapsed, copy[language].participants, c.fullTime, c.partTime, copy[language].csvHourlyRate, c.cost, copy[language].csvCurrency, copy[language].segmentKind, copy[language].excludedSeconds]);
+    segments.forEach((s, i) => lines.push([i + 1, (s.offsetMs / 1000).toFixed(3), (s.ms / 1000).toFixed(3), singleRate() ? s.people.participants : s.people.fullTime + s.people.partTime, singleRate() ? '' : s.people.fullTime, singleRate() ? '' : s.people.partTime, s.rate, s.amount.toFixed(6), p.currency, s.kind || 'measured', (s.excludedMs || 0) / 1000]));
     const safe = x => { let s = String(x ?? ''); if (/^\s*[=+@\-]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
     const blob = new Blob(['\ufeff' + lines.map(row => row.map(safe).join(',')).join('\r\n')], {type: 'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = 'time-is-money-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
-    exported = true;
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
   try {
     language = Object.hasOwn(copy, localStorage.getItem(langStore)) ? localStorage.getItem(langStore) : 'ja';
@@ -209,12 +211,16 @@
     const finite = n => Number.isFinite(n) && n >= 0;
     if (s && s.version === 1 && Object.hasOwn(countries, s.country) && Object.hasOwn(purposeLabels, s.purpose) && validPerson(s.activePeople) && finite(s.elapsedMs) && finite(s.accruedAmount) && finite(s.checkpoint) && Number.isFinite(Date.parse(s.sessionStart)) && Array.isArray(s.segments) && s.segments.length <= 10000 && s.segments.every(v => validPerson(v.people) && [v.offsetMs, v.ms, v.rate, v.amount].every(finite))) {
       $('country').value = s.country; $('meetingType').value = s.purpose;
-      for (const id of peopleIds) $(id).value = s.activePeople[id];
+      for (const id of singleRate() ? ['participants'] : ['fullTime', 'partTime']) $(id).value = s.activePeople[id];
       elapsedMs = s.elapsedMs; accruedAmount = s.accruedAmount; checkpoint = s.checkpoint;
       activePeople = s.activePeople; segments = s.segments; sessionStart = new Date(s.sessionStart);
       sessionEnd = s.sessionEnd && Number.isFinite(Date.parse(s.sessionEnd)) ? new Date(s.sessionEnd) : null;
       finished = s.finished === true; running = s.running === true && !finished; segmentRate = hourly(activePeople); restored = true;
-      if (running) settle(); persistSession();
+      recoveryGapMs = !finished && finite(s.recoveryGapMs) ? s.recoveryGapMs : 0;
+      if (recoveryGapMs > 0) running = false;
+      if (running && Date.now() - checkpoint > 600000) { running = false; recoveryGapMs = Date.now() - checkpoint; sessionEnd = new Date(checkpoint); }
+      else if (running) settle('restored-gap');
+      persistSession();
     } else if (s) sessionStorage.removeItem(sessionStore);
   } catch { try { sessionStorage.removeItem(sessionStore); } catch {} }
   for (const id of ids) $(id).addEventListener('input', () => {
@@ -222,10 +228,9 @@
   });
   for (const id of peopleIds) $(id).addEventListener('change', () => { commitPeople(); save(); render(); });
   $('meetingType').addEventListener('change', render);
-  $('outcomeNote').addEventListener('input', () => { exported = false; });
   $('start').addEventListener('click', start); $('pause').addEventListener('click', pause);
   $('finish').addEventListener('click', finish);
-  $('outcomeStatus').addEventListener('change', () => { exported = false; render(); });
+  $('outcomeStatus').addEventListener('change', render);
   $('reset').addEventListener('click', reset); $('export').addEventListener('click', csv);
   $('langJa').addEventListener('click', () => setLanguage('ja'));
   $('langEn').addEventListener('click', () => setLanguage('en'));
@@ -239,7 +244,15 @@
   window.addEventListener('resize', render);
   document.addEventListener('visibilitychange', () => { if (running) settle(); persistSession(); if (!document.hidden) render(); });
   window.addEventListener('pagehide', () => { if (running) settle(); persistSession(); });
-  window.addEventListener('beforeunload', e => { persistSession(); if (sessionStart && (running || !exported)) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('beforeunload', e => { persistSession(); if (sessionStart) { e.preventDefault(); e.returnValue = ''; } });
+  function resolveGap(include) {
+    if (recoveryGapMs <= 0 || !activePeople) return;
+    const ms = include ? recoveryGapMs : 0, amount = segmentRate * ms / 3600000;
+    segments.push({kind: include ? 'confirmed-restored-gap' : 'excluded-restored-gap', offsetMs: elapsedMs, ms, people: {...activePeople}, rate: segmentRate, amount, excludedMs: include ? 0 : recoveryGapMs});
+    elapsedMs += ms; accruedAmount += amount; recoveryGapMs = 0; checkpoint = Date.now(); if (include) sessionEnd = new Date(); persistSession(); render();
+  }
+  $('includeGap').addEventListener('click', () => resolveGap(true));
+  $('excludeGap').addEventListener('click', () => resolveGap(false));
   applyCopy(); render();
   if (running) tick();
   let offlineReady = false, updateWaiting = false, offlineFailed = false;
