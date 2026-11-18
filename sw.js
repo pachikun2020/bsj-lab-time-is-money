@@ -1,11 +1,11 @@
 const CACHE_PREFIX = 'meryds-meeting-meter-';
-const CACHE = `${CACHE_PREFIX}v18`;
+const CACHE = `${CACHE_PREFIX}v19`;
 const ASSETS = ['./', './index.html', './app.js', './countries.js', './i18n.js', './manifest.webmanifest', './manifest.en.webmanifest', './manifest.zh.webmanifest', './icon-192-yen.png', './icon-512-yen.png', './meeting-room-hero.webp'];
 const SCOPE = new URL(self.registration.scope);
 const ASSET_URLS = new Set(ASSETS.map(path => new URL(path, SCOPE).href));
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS.map(path => new Request(new URL(path, SCOPE).href, {cache: 'reload'})))));
 });
 
 self.addEventListener('activate', event => {
@@ -21,6 +21,9 @@ self.addEventListener('fetch', event => {
   if (!ASSET_URLS.has(canonical)) return;
   event.respondWith(caches.open(CACHE).then(async cache => {
     // Precache is one release snapshot. Never refresh individual assets in place.
-    return (await cache.match(canonical)) || fetch(event.request);
+    const response = (await cache.match(canonical)) || await fetch(event.request);
+    // Hosts may redirect /index.html to /. Navigation responses must not carry
+    // the redirected flag of the precache fetch.
+    return navigation && response.redirected ? new Response(response.body, {status: response.status, statusText: response.statusText, headers: response.headers}) : response;
   }));
 });

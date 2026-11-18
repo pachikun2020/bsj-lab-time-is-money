@@ -28,7 +28,8 @@ This local QA build offers Japanese, English and Simplified Chinese. All five co
 日本はCE仮置きであり、統計中央値ではありません。英国は[ONS ASHE Table 14.6a 2025 revised](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14)のAdministrative and secretarial occupations：フルタイム£15.81/時、パートタイム£14.03/時（残業代を除く中央値）。アイルランドは[CSO Structure of Earnings Survey 2022 表4.2](https://www.cso.ie/en/releasesandpublications/ep/p-ses/structureofearningssurvey2022/occupationandeducation/)のAdministrative & Secretarial職種：フルタイム€18.24/時、パートタイム€16.66/時。いずれもホワイトカラー全体の中央値ではありません。
 `(フルタイム人数 × 2,500円/時 + パートタイム人数 × 1,500円/時) × (経過秒 ÷ 3600)`
 フルタイムの固定単価には社会保険分を含む概算です。人数が計測中に変わる場合は、各区間の原価を積算します。
-会議の目的・人数・表示設定・計算対象国・表示言語はこの端末のlocalStorageに保存します。終了後の成果確認とメモは保存せず、必要ならCSVを出力します。
+人数・表示設定・計算対象国・表示言語はこの端末のlocalStorageに保存します。目的区分・数値の計測状態・区間履歴はこのタブのsessionStorageに保存し、再読込時に復元します。会議の目的は新しい会議ごとに選択します。自由記入のメモと終了後の成果選択は保存せず、必要ならCSVを出力します。入力中の人数は欄を離れると計測へ反映され、それまでは直前に確定した人数を使います。CSVには人数と時給の区間履歴を付けます。
+計測は端末の日時に基づくため、スリープ中も経過時間を含めます。計測中は日時を変更しないでください。iPhone Safari実機でのスリープ/復帰、ホーム画面追加、CSV開封は別途確認が必要です。
 この数字は会議に投入された推定コストであり、すべて「無駄だった」という意味ではありません。
 
 ## 次のステップ
