@@ -6,7 +6,7 @@ import build_release as release
 class ReleaseBoundaryTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.base=Path(self.tmp.name);self.root=self.base/'source';self.root.mkdir()
-        for name in release.ASSETS:shutil.copyfile(release.ROOT/name,self.root/name)
+        for name in release.ASSETS+release.NOTICES:shutil.copyfile(release.ROOT/name,self.root/name)
         (self.root/'deploy').mkdir();shutil.copyfile(release.ROOT/'deploy/pages-preview-headers',self.root/'deploy/pages-preview-headers')
         self.root_patch=patch.object(release,'ROOT',self.root);self.root_patch.start()
         self.git_patch=patch.object(release.subprocess,'check_output',return_value='test-revision\n');self.git_patch.start()
@@ -15,12 +15,17 @@ class ReleaseBoundaryTests(unittest.TestCase):
         (self.root/'.env').write_text('PRIVATE_SENTINEL');(self.root/'review.csv').write_text('PRIVATE_CSV')
         out=self.base/'output';release.build(out)
         with zipfile.ZipFile(out/'time-is-money-preview.zip') as z:
+            for name in release.NOTICES:self.assertEqual(z.read(name),(self.root/name).read_bytes())
             self.assertNotIn('.env',z.namelist());self.assertNotIn('review.csv',z.namelist())
             self.assertFalse(any('PRIVATE_SENTINEL' in z.read(n).decode(errors='ignore') for n in z.namelist()))
             m=json.loads((out/'manifest.json').read_text())
             for record in m['files']:self.assertEqual(hashlib.sha256(z.read(record['path'])).hexdigest(),record['sha256'])
     def test_asset_symlink_rejected(self):
         (self.base/'private').write_text('PRIVATE_SENTINEL');(self.root/'app.js').unlink();(self.root/'app.js').symlink_to(self.base/'private')
+        with self.assertRaises(ValueError):release.build(self.base/'output')
+        self.assertFalse((self.base/'output').exists())
+    def test_notice_symlink_rejected(self):
+        (self.base/'private').write_text('PRIVATE_SENTINEL');(self.root/'LICENSE').unlink();(self.root/'LICENSE').symlink_to(self.base/'private')
         with self.assertRaises(ValueError):release.build(self.base/'output')
         self.assertFalse((self.base/'output').exists())
     def test_output_inside_source_rejected(self):
