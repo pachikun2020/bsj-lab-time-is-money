@@ -73,3 +73,9 @@
 - MIT License（合同会社MERYDS）と生成画像の出所・規約URL、統計出典表記を整備。配布ZIPへ許諾/素材/統計の文書を同梱。
 - v0.6.4-qaで主要操作ボタンを拡大し、結果CSVを成果確認欄へ移動。CEが実機確認済み。
 
+# v0.6.6-qa（2026-11-19）
+
+- CE 11:48決定により正式表記を「BSJ LAB · Time is Money MCC ミーティングコストカウンター / MERYDS」へ統一。製品名は全言語共通。
+- ホーム画面の短縮名は3言語ともMCC。MCC = Meeting Cost Counterを各言語の画面にも共通表示。
+- title・画面・h1・OGP/Twitter・manifest・README・配布404へ反映。MCC併記が第三者商標との問題解消を保証するものではない。
+

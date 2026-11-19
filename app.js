@@ -61,7 +61,7 @@
     document.querySelector('.lang-switch').setAttribute('aria-label', t.langLabel);
     put('.rightbrand', t.header);
     const mobile = document.createElement('span'); mobile.className = 'mobile-break'; mobile.append(document.createElement('br'));
-    put('.hero .app-name', 'Time is Money ミーティングコストカウンター');
+    put('.hero .app-name', 'Time is Money MCC ミーティングコストカウンター');
     document.querySelector('.hero-tagline').replaceChildren(t.hero[0], mobile, t.hero[1], document.createElement('br'), t.hero[2]);
     rich('.hero .sub', t.heroSub);
     put('#settings h2', t.settings);
