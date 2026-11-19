@@ -7,6 +7,7 @@ window.TMM_I18N = {
     confirmReset: '計測結果とメモが消えます。必要なCSVの保存を確認しましたか？リセットしますか？',
     segmentHeading: '計測区間', segmentOffset: '計測開始からの秒数（一時停止を除く）', csvHourlyRate: '区間の合計時給',
     timeCaution: '計測中は端末の日時を変更しないでください。自由記入のメモは再読込すると消えます。',
+    offlineGuide: 'オフラインで使うときは、最初にネットにつないでホーム画面のMCCを開き、下の「この端末でオフライン利用できます。」の表示を待ってからご利用ください。',
     offlinePending: 'この端末でのオフライン利用を準備しています。', offlineReady: 'この端末でオフライン利用できます。', offlineFailed: 'オフラインの準備ができませんでした。接続中に開き直してください。', offlineUpdate: '新しい版があります。計測を終えてこのアプリのすべてのタブを閉じ、開き直すと更新されます。',
     participants: '参加人数（合計）',
     rateUS: '米国BLS 2025年5月、事務・管理支援職の時給中央値：$22.81。フル／パートを合わせた職種全体の値で計算します。',
@@ -41,7 +42,7 @@ window.TMM_I18N = {
     essay2: ['会議の目的はコストをゼロにすることではありません。良い会議には価値があります。数値は', '削減可能な時間を見つけるための概算', 'であり、参加者個人の価値や発言量を評価するためのものではありません。'],
     disclaimer: '日本の計算式：フルタイム人数 × 2,500円/時 ＋ パートタイム人数 × 1,500円/時を経過時間に応じて積算。フルタイム2,500円には社会保険分を含み、パートタイム1,500円は固定の概算単価です。統計の中央値ではありません。表示は円建ての概算で、実際の賃金・法定福利費・機会費用や節約額を証明するものではありません。入力した値はこの端末内にのみ保存され、MERYDSへの送信や分析は行いません。CSVは端末内で生成します。',
     disclaimerIreland: 'アイルランドCSOの2022年Structure of Earnings Survey表4.2にある事務・秘書職の時給中央値を使用。フルタイム €18.24、パートタイム €16.66を人数と経過時間に応じて積算します。これは事務・秘書職の給与相当額であり、全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
-    footer: '試作 v0.6.6-qa · 利用条件確認中 · GitHub一般公開は未実施',
+    footer: 'v0.6.7-qa · MIT License · MERYDS / BSJ LAB',
     csv: {record: '会議記録', value: '値', start: '開始日時', end: '終了日時', purpose: '会議の目的区分', goal: '今日この会議で行うこと', outcome: '成果の確認', left: '残ったもの', fullTime: 'フルタイム人数', partTime: 'パートタイム人数', elapsed: '経過時間（秒）', cost: '推定会議人件費', formula: '算定方式', formulaValue: 'フルタイム人数×2500円/時＋パートタイム人数×1500円/時。人数変更は区間ごとに積算', unfinished: '未終了', purposeLabels: {decision: '決定', share: '共有', dialogue: '対話'}, outcomeLabels: {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'}}
   },
   en: {
@@ -52,6 +53,7 @@ window.TMM_I18N = {
     confirmReset: 'This clears timer results and notes. Have you saved the CSV you need? Reset?',
     segmentHeading: 'Measurement segment', segmentOffset: 'Offset seconds (excluding pauses)', csvHourlyRate: 'Segment total hourly rate',
     timeCaution: 'Do not change the device date or time while timing. Free-text notes are lost on reload.',
+    offlineGuide: 'Before using MCC offline, connect to the internet, open MCC from your Home Screen, and wait for “Offline use is ready on this device.” below.',
     offlinePending: 'Preparing offline use on this device.', offlineReady: 'Offline use is ready on this device.', offlineFailed: 'Offline preparation failed. Reopen while connected.', offlineUpdate: 'An update is available. Finish timing, close all tabs for this app, then reopen to update.',
     participants: 'Participants (total)',
     rateUS: 'US BLS May 2025, Office and administrative support occupations: median $22.81/hour, combining full-time and part-time workers.',
@@ -86,7 +88,7 @@ window.TMM_I18N = {
     essay2: ['The goal is not to make meeting costs zero. Good meetings have value. This number is ', 'an estimate to help find time that could be saved', ', not a measure of any participant’s worth or contribution.'],
     disclaimer: 'Japan calculation: (full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour) × elapsed hours. These are fixed Japanese estimates, not statistical medians; the full-time rate includes a social-insurance allowance. Switching language does not change the calculation country or convert currency. The figure does not prove actual pay, benefits, opportunity cost, waste, or savings. Inputs remain on this device; this app does not send them to MERYDS or analytics. CSV files are generated on this device.',
     disclaimerIreland: 'Uses median hourly earnings for Administrative & Secretarial employees in Ireland, CSO Structure of Earnings Survey 2022 Table 4.2: €18.24 full-time and €16.66 part-time. The estimate is a wage equivalent for this occupation, not the median for all white-collar workers or the employer’s full cost. Inputs stay on this device and are not sent anywhere.',
-    footer: 'Prototype v0.6.6-qa · Terms pending · GitHub repository not public',
+    footer: 'v0.6.7-qa · MIT License · MERYDS / BSJ LAB',
     csv: {record: 'Meeting record', value: 'Value', start: 'Start time', end: 'End time', purpose: 'Meeting purpose', goal: 'What this meeting will do', outcome: 'Outcome', left: 'What came out of it', fullTime: 'Full-time participants', partTime: 'Part-time participants', elapsed: 'Elapsed time (seconds)', cost: 'Estimated labor cost', formula: 'Formula', formulaValue: 'Full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour. Participant changes accrue by segment.', unfinished: 'Not finished', purposeLabels: {decision: 'Decision', share: 'Information sharing', dialogue: 'Dialogue'}, outcomeLabels: {achieved: 'Achieved', partial: 'Partly achieved', none: 'Not achieved', unknown: 'Not sure yet'}}
   }
   ,zh: {
@@ -97,6 +99,7 @@ window.TMM_I18N = {
     confirmReset: '计时结果和备注将被清除。请确认已保存需要的 CSV。确定重置吗？',
     segmentHeading: '计时区间', segmentOffset: '开始后的秒数（不含暂停）', csvHourlyRate: '区间合计时薪',
     timeCaution: '计时期间请勿更改设备日期或时间。重新加载会清除自由填写的备注。',
+    offlineGuide: '首次离线使用前，请先联网并从主屏幕打开MCC，等待下方显示“此设备已可离线使用。”后再使用。',
     offlinePending: '正在准备此设备的离线使用。', offlineReady: '此设备已可离线使用。', offlineFailed: '离线准备失败，请联网后重新打开。', offlineUpdate: '有新版本。请结束计时，关闭本应用的所有标签页后重新打开以更新。',
     participants: '参会总人数',
     rateUS: '美国 BLS 2025 年 5 月办公及行政支持职业时薪中位数：$22.81，包含全职和兼职。',
@@ -132,7 +135,7 @@ window.TMM_I18N = {
     essay2: ['目标不是让会议成本归零。好的会议有其价值。这个数字只是', '帮助发现可节省时间的估算值', '，不是评价参会者个人价值或贡献的依据。'],
     disclaimer: '日本计算方式：全职人数 × 每小时 ¥2,500 ＋ 兼职人数 × 每小时 ¥1,500，再按经过时间累计。全职单价含社会保险的估算额，兼职使用固定估算单价，均不代表统计中位数。金额不能证明实际工资、福利、机会成本或节省额。输入仅保存在本设备，不会发送给 MERYDS 或分析服务。CSV 在本设备生成。',
     disclaimerIreland: '使用爱尔兰 CSO《2022 年收入结构调查》表 4.2 的行政与秘书职业时薪中位数：全职 €18.24，兼职 €16.66，按人数和时长累计。该数值是这一职业的工资估算，并非所有白领的中位数或雇主总成本。输入仅保存在本设备，不会外传。',
-    footer: '试用版 v0.6.6-qa · 使用条款待确认 · GitHub 尚未公开',
+    footer: 'v0.6.7-qa · MIT License · MERYDS / BSJ LAB',
     csv: {record: '会议记录', value: '数值', start: '开始时间', end: '结束时间', purpose: '会议目的', goal: '本次会议要完成什么', outcome: '会议成果', left: '取得了什么', fullTime: '全职人数', partTime: '兼职人数', elapsed: '经过时间（秒）', cost: '估算人力成本', formula: '计算方式', formulaValue: '全职人数 × ¥2,500/小时 ＋ 兼职人数 × ¥1,500/小时；人数变化按时段累计。', unfinished: '未结束', purposeLabels: {decision: '决策', share: '信息共享', dialogue: '讨论'}, outcomeLabels: {achieved: '达成', partial: '部分达成', none: '未达成', unknown: '尚不确定'}}
   }
 

@@ -89,7 +89,7 @@
     put('.essay section:nth-child(2) h2', t.essay2Title); rich('.essay section:nth-child(2) p', t.essay2);
     put('.disclaimer', disclaimer(t)); put('footer span:last-child', t.footer);
     put('#inputWarning', t.editWarning); put('#sessionNotice', t.sessionRestored);
-    put('#timeCaution', t.timeCaution);
+    put('#timeCaution', t.timeCaution); put('#offlineGuide', t.offlineGuide);
     put('#includeGap', t.includeGap); put('#excludeGap', t.excludeGap);
     $('pause').textContent = t.action.pause; $('finish').textContent = t.action.finish;
     $('reset').textContent = t.action.reset; $('export').textContent = t.action.export;
