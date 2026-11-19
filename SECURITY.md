@@ -1,6 +1,6 @@
 # Security policy
 
-This repository is preparing its first public release. The current QA candidate is v0.6.4-qa. Older QA versions are not maintained independently; fixes are applied to the latest candidate. No response-time or security certification is promised.
+Security fixes target the latest code in the default branch. Older QA versions are not maintained independently. No response-time or security certification is promised.
 
 ## Reporting a vulnerability
 
