@@ -28,7 +28,7 @@ def build(destination):
     site=out/'site';site.mkdir(parents=True)
     for name,data in source.items(): (site/name).write_bytes(data)
     shutil.copyfile(ROOT/'deploy/pages-preview-headers',site/'_headers')
-    (site/'404.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | Time is Money</title><h1>Time is Money</h1><p>Page not found / ページが見つかりません / 未找到页面</p><a href="/">Open Time is Money</a></html>')
+    (site/'404.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 | BSJ LAB · Time is Money ミーティングコストカウンター / MERYDS</title><h1>Time is Money ミーティングコストカウンター</h1><p>Page not found / ページが見つかりません / 未找到页面</p><a href="/">Open Time is Money</a></html>')
     (site/'robots.txt').write_text('User-agent: *\nDisallow: /\n')
     revision=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()
     manifest={'source_revision':revision,'runtime_version':versions.pop(),'profile':'pages-preview-root','deploy_performed':False,'files':[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(site.iterdir())],'excluded':['.git','README','internal reports','API scripts','credentials','CSV exports','source ZIP','reference images'],'notes':['Root-hosted preview only; do not merge these headers into the BSJ LAB LP without path scoping.','noindex is not authentication. Protected preview requires a separate access-control decision.','Public hosting approval, trademark review and remaining installed-PWA checks are pending; MIT is selected.']}

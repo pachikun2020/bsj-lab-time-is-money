@@ -13,7 +13,7 @@ window.TMM_I18N = {
     disclaimerUS: '米国BLS OEWS 2025年5月の事務・管理支援職の時給中央値$22.81に、合計人数と経過時間を掛けて積算します。全ホワイトカラーの中央値や雇用主の総原価ではありません。フル／パート別の単価は設定していません。入力は端末内にのみ保存され、送信されません。',
     rateChina: '中国人社部2024年、行政事務・補助職の年収中央値66,200元 ÷ 仮定の年2,080時間＝約31.83元/時。時給中央値の実測値ではありません。',
     disclaimerChina: '中国人社部「企業薪酬調査情報（2024年）」表1-1、職業301の年収50分位値6.62万元を使用。賞与・手当・残業代等を含む年収中央値を、週40時間×52週＝年2,080時間（休日調整なしの仮定）で割った時給目安です。フル／パート別ではなく合計人数で計算します。全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
-    title: 'Time is Money 〜会議の値段可視化アプリ〜 | MERYDS',
+    title: 'BSJ LAB · Time is Money ミーティングコストカウンター / MERYDS',
     langLabel: '表示言語',
     description: '会議に投入する推定人件費をリアルタイムで可視化する無料PWA。登録不要。',
     header: '無料 / 登録不要 / 個人給与データ不要 / オフライン対応',
@@ -41,7 +41,7 @@ window.TMM_I18N = {
     essay2: ['会議の目的はコストをゼロにすることではありません。良い会議には価値があります。数値は', '削減可能な時間を見つけるための概算', 'であり、参加者個人の価値や発言量を評価するためのものではありません。'],
     disclaimer: '日本の計算式：フルタイム人数 × 2,500円/時 ＋ パートタイム人数 × 1,500円/時を経過時間に応じて積算。フルタイム2,500円には社会保険分を含み、パートタイム1,500円は固定の概算単価です。統計の中央値ではありません。表示は円建ての概算で、実際の賃金・法定福利費・機会費用や節約額を証明するものではありません。入力した値はこの端末内にのみ保存され、MERYDSへの送信や分析は行いません。CSVは端末内で生成します。',
     disclaimerIreland: 'アイルランドCSOの2022年Structure of Earnings Survey表4.2にある事務・秘書職の時給中央値を使用。フルタイム €18.24、パートタイム €16.66を人数と経過時間に応じて積算します。これは事務・秘書職の給与相当額であり、全ホワイトカラーの中央値や雇用主の総原価ではありません。入力は端末内にのみ保存され、送信されません。',
-    footer: '試作 v0.6.4-qa · 利用条件確認中 · GitHub一般公開は未実施',
+    footer: '試作 v0.6.5-qa · 利用条件確認中 · GitHub一般公開は未実施',
     csv: {record: '会議記録', value: '値', start: '開始日時', end: '終了日時', purpose: '会議の目的区分', goal: '今日この会議で行うこと', outcome: '成果の確認', left: '残ったもの', fullTime: 'フルタイム人数', partTime: 'パートタイム人数', elapsed: '経過時間（秒）', cost: '推定会議人件費', formula: '算定方式', formulaValue: 'フルタイム人数×2500円/時＋パートタイム人数×1500円/時。人数変更は区間ごとに積算', unfinished: '未終了', purposeLabels: {decision: '決定', share: '共有', dialogue: '対話'}, outcomeLabels: {achieved: '達成', partial: '一部達成', none: '未達', unknown: '判断保留'}}
   },
   en: {
@@ -58,7 +58,7 @@ window.TMM_I18N = {
     disclaimerUS: 'Uses the US BLS OEWS May 2025 median hourly wage of $22.81 for Office and administrative support occupations, multiplied by total participants and elapsed hours. This is an occupational wage estimate, not the median for all white-collar workers or total employer cost. No separate full-time/part-time rates are assumed. Inputs stay on this device and are not sent anywhere.',
     rateChina: 'China MOHRSS 2024, administrative affairs and support personnel: annual median CNY 66,200 / assumed 2,080 hours = about CNY 31.83/hour. This is a proxy, not an observed hourly median.',
     disclaimerChina: 'Uses the 50th percentile annual wage of CNY 66,200 for occupation 301 in MOHRSS Enterprise Salary Survey 2024 Table 1-1. Annual wages include bonuses, allowances and overtime. The hourly proxy assumes 40 hours/week x 52 weeks = 2,080 hours, without holiday adjustment. Uses total participants; no full-time/part-time split. This is not the median for all white-collar workers or total employer cost. Inputs stay on this device and are not sent anywhere.',
-    title: 'Time is Money — Meeting Cost Counter | MERYDS',
+    title: 'BSJ LAB · Time is Money ミーティングコストカウンター / MERYDS',
     langLabel: 'Language',
     description: 'A free PWA that estimates meeting labor cost in real time. No account or individual salary data.',
     header: 'Free / No sign-up / No individual salary data / Offline ready',
@@ -86,7 +86,7 @@ window.TMM_I18N = {
     essay2: ['The goal is not to make meeting costs zero. Good meetings have value. This number is ', 'an estimate to help find time that could be saved', ', not a measure of any participant’s worth or contribution.'],
     disclaimer: 'Japan calculation: (full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour) × elapsed hours. These are fixed Japanese estimates, not statistical medians; the full-time rate includes a social-insurance allowance. Switching language does not change the calculation country or convert currency. The figure does not prove actual pay, benefits, opportunity cost, waste, or savings. Inputs remain on this device; this app does not send them to MERYDS or analytics. CSV files are generated on this device.',
     disclaimerIreland: 'Uses median hourly earnings for Administrative & Secretarial employees in Ireland, CSO Structure of Earnings Survey 2022 Table 4.2: €18.24 full-time and €16.66 part-time. The estimate is a wage equivalent for this occupation, not the median for all white-collar workers or the employer’s full cost. Inputs stay on this device and are not sent anywhere.',
-    footer: 'Prototype v0.6.4-qa · Terms pending · GitHub repository not public',
+    footer: 'Prototype v0.6.5-qa · Terms pending · GitHub repository not public',
     csv: {record: 'Meeting record', value: 'Value', start: 'Start time', end: 'End time', purpose: 'Meeting purpose', goal: 'What this meeting will do', outcome: 'Outcome', left: 'What came out of it', fullTime: 'Full-time participants', partTime: 'Part-time participants', elapsed: 'Elapsed time (seconds)', cost: 'Estimated labor cost', formula: 'Formula', formulaValue: 'Full-time participants × ¥2,500/hour + part-time participants × ¥1,500/hour. Participant changes accrue by segment.', unfinished: 'Not finished', purposeLabels: {decision: 'Decision', share: 'Information sharing', dialogue: 'Dialogue'}, outcomeLabels: {achieved: 'Achieved', partial: 'Partly achieved', none: 'Not achieved', unknown: 'Not sure yet'}}
   }
   ,zh: {
@@ -103,7 +103,7 @@ window.TMM_I18N = {
     disclaimerUS: '使用美国 BLS OEWS 2025 年 5 月办公及行政支持职业时薪中位数 $22.81，按参会总人数和时长累计。未设置全职与兼职的不同单价。这不是所有白领的中位数，也不是雇主总成本。输入仅保存在本设备，不会外传。',
     rateChina: '人社部 2024 年行政办事及辅助人员年工资中位数 66,200 元 ÷ 假设的全年 2,080 小时＝约 31.83 元/小时。这不是实测时薪中位数。',
     disclaimerChina: '使用人社部《企业薪酬调查信息（2024年）》表 1-1 职业 301 的工资 50% 分位值 6.62 万元/年，包含奖金、津贴、加班工资等。时薪估算假设每周 40 小时×52 周＝全年 2,080 小时，未调整节假日。按参会总人数计算，不区分全职与兼职。这不是所有白领的中位数，也不是雇主总成本。输入仅保存在本设备，不会外传。',
-    title: 'Time is Money｜会议价格可视化｜MERYDS', langLabel: '显示语言',
+    title: 'BSJ LAB · Time is Money ミーティングコストカウンター / MERYDS', langLabel: '显示语言',
     description: '实时显示会议的人力成本估算值。无需注册或输入个人工资。',
     header: '免费 / 无需注册 / 无需个人工资数据 / 支持离线',
     hero: ['开会的时间', '不是免费的。', '这场会议花了多少？'],
@@ -132,7 +132,7 @@ window.TMM_I18N = {
     essay2: ['目标不是让会议成本归零。好的会议有其价值。这个数字只是', '帮助发现可节省时间的估算值', '，不是评价参会者个人价值或贡献的依据。'],
     disclaimer: '日本计算方式：全职人数 × 每小时 ¥2,500 ＋ 兼职人数 × 每小时 ¥1,500，再按经过时间累计。全职单价含社会保险的估算额，兼职使用固定估算单价，均不代表统计中位数。金额不能证明实际工资、福利、机会成本或节省额。输入仅保存在本设备，不会发送给 MERYDS 或分析服务。CSV 在本设备生成。',
     disclaimerIreland: '使用爱尔兰 CSO《2022 年收入结构调查》表 4.2 的行政与秘书职业时薪中位数：全职 €18.24，兼职 €16.66，按人数和时长累计。该数值是这一职业的工资估算，并非所有白领的中位数或雇主总成本。输入仅保存在本设备，不会外传。',
-    footer: '试用版 v0.6.4-qa · 使用条款待确认 · GitHub 尚未公开',
+    footer: '试用版 v0.6.5-qa · 使用条款待确认 · GitHub 尚未公开',
     csv: {record: '会议记录', value: '数值', start: '开始时间', end: '结束时间', purpose: '会议目的', goal: '本次会议要完成什么', outcome: '会议成果', left: '取得了什么', fullTime: '全职人数', partTime: '兼职人数', elapsed: '经过时间（秒）', cost: '估算人力成本', formula: '计算方式', formulaValue: '全职人数 × ¥2,500/小时 ＋ 兼职人数 × ¥1,500/小时；人数变化按时段累计。', unfinished: '未结束', purposeLabels: {decision: '决策', share: '信息共享', dialogue: '讨论'}, outcomeLabels: {achieved: '达成', partial: '部分达成', none: '未达成', unknown: '尚不确定'}}
   }
 

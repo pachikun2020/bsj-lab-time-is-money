@@ -52,12 +52,17 @@
     };
     document.documentElement.lang = language;
     document.title = t.title;
+    document.querySelector('meta[property="og:title"]').content = t.title;
+    document.querySelector('meta[name="twitter:title"]').content = t.title;
+    document.querySelector('meta[property="og:description"]').content = t.description;
+    document.querySelector('meta[name="twitter:description"]').content = t.description;
     document.querySelector('meta[name="description"]').content = t.description;
     document.querySelector('link[rel="manifest"]').href = language === 'ja' ? './manifest.webmanifest' : language === 'zh' ? './manifest.zh.webmanifest' : './manifest.en.webmanifest';
     document.querySelector('.lang-switch').setAttribute('aria-label', t.langLabel);
     put('.rightbrand', t.header);
     const mobile = document.createElement('span'); mobile.className = 'mobile-break'; mobile.append(document.createElement('br'));
-    document.querySelector('.hero h1').replaceChildren(t.hero[0], mobile, t.hero[1], document.createElement('br'), t.hero[2]);
+    put('.hero .app-name', 'Time is Money ミーティングコストカウンター');
+    document.querySelector('.hero-tagline').replaceChildren(t.hero[0], mobile, t.hero[1], document.createElement('br'), t.hero[2]);
     rich('.hero .sub', t.heroSub);
     put('#settings h2', t.settings);
     put('label[for="country"]', t.country);
