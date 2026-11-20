@@ -8,7 +8,7 @@ This app offers Japanese, English and Simplified Chinese. All five countries can
 
 ## 目的
 
-現在の検証候補は **v0.6.7-qa** です。ライセンスはMIT、著作権者は合同会社MERYDS（MERYDS LLC）です。個人の連絡先や認証付き検証URLを公開READMEへ載せない運用とします。
+現在の検証候補は **v0.6.8-qa** です。ライセンスはMIT、著作権者は合同会社MERYDS（MERYDS LLC）です。個人の連絡先や認証付き検証URLを公開READMEへ載せない運用とします。
 
 会議の推定人件費をリアルタイムに表示し、「その会議は必要か？」を考えるきっかけにする。社内利用者を監視・評価するツールではありません。
 
@@ -46,7 +46,7 @@ This app offers Japanese, English and Simplified Chinese. All five countries can
 
 ## ローカルの配布候補作成（公開しない）
 
-`python3 tools/build_release.py --out ../release-prep-20261118/candidate-02`で、許可したアプリ資産だけの検証用パッケージを作成できます。出力先が既にある場合は上書きしません。アプリ用11資産に加え、MITのLICENSE・素材記録・統計出典表記、Pages向けヘッダー案、404、robots.txtの合計17ファイルを含みます。社内資料・CSV・Git履歴・認証情報は含めません。
+`python3 tools/build_release.py --out ../release-prep-20261118/candidate-02`で、許可したアプリ資産だけの検証用パッケージを作成できます。出力先が既にある場合は上書きしません。アプリ用11資産に加え、MITのLICENSE・素材記録・統計出典表記、Pages向けヘッダー案、404、robots.txtのOGP画像も含む合計18ファイルを含みます。社内資料・CSV・Git履歴・認証情報は含めません。
 
 `python3 tools/serve_release.py --site ../release-prep-20261118/candidate-02/site --port 8782`は127.0.0.1だけで待ち受け、同じヘッダー案をローカルで検証します。Cloudflareへの配置やDNS変更は行いません。
 
@@ -58,3 +58,7 @@ This app offers Japanese, English and Simplified Chinese. All five countries can
 License: [MIT](LICENSE) — Copyright (c) 2026 合同会社MERYDS (MERYDS LLC)。統計データは各提供元の条件に従います。商標権の許諾は含みません。
 
 素材の出所と確認状況は [ASSETS.md](ASSETS.md)、単価の定義・出典・データ利用表記は [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) を参照してください。脆弱性の連絡は [SECURITY.md](SECURITY.md)、提案・寄稿は [CONTRIBUTING.md](CONTRIBUTING.md) に従ってください。
+
+## SNSカード画像
+
+正規URLは https://mcc.meryds.com/ 、OGP画像は https://mcc.meryds.com/ogp.png （1200×630 PNG）です。画像は中央の正方形へ重要な文字を収め、日本語の共通カードとして提供します。画像自体はオフライン用のキャッシュへ含めません。再描画はMacのシステムフォントと開発用Pillowで `python3 tools/render_ogp.py` を実行します。フォントファイルとPillow本体はサイトへ配布しません。

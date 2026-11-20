@@ -1,5 +1,9 @@
 # 素材の出所
 
+## ogp.png（SNSカード用、v0.6.8-qaで追加）
+
+BSJ LAB LPのブランド色（濃紺#0A1731、金#F4B942、オレンジ#E8722A）を使った自作の組版画像。1200×630 PNG。tools/render_ogp.pyで描画し、写真・外部イラスト・既存バナーの画像自体は流用しない。時計の線画も同コードで作成。Macのローカルシステムフォント（Hiragino Mincho/Georgia/Hiragino Sans）を文字のラスタライズに使用し、フォントファイルは配布しない。画像はプロジェクトのMIT許諾範囲に含む。下記のChatGPT生成3点とは制作方法が異なる。
+
 - `meeting-room-hero.webp`：ChatGPTの画像生成で作成した会議室画像をWebPへ圧縮したもの。
 - `icon-192-yen.png` / `icon-512-yen.png`：ChatGPTの画像生成で作成した時計と円記号のアイコン。
 

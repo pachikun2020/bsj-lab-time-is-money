@@ -1,9 +1,11 @@
 """Build a local allow-listed preview package. No deployment or network calls."""
 from pathlib import Path
 import argparse,hashlib,json,re,shutil,subprocess,zipfile
+import struct
 
 ROOT=Path(__file__).resolve().parents[1]
 ASSETS=['index.html','app.js','countries.js','i18n.js','sw.js','manifest.webmanifest','manifest.en.webmanifest','manifest.zh.webmanifest','icon-192-yen.png','icon-512-yen.png','meeting-room-hero.webp']
+SOCIAL_ASSETS=['ogp.png']
 NOTICES=['LICENSE','ASSETS.md','THIRD_PARTY_NOTICES.md']
 def build(destination):
     out=destination.resolve()
@@ -11,12 +13,15 @@ def build(destination):
     if root==out or root in out.parents: raise ValueError('Output must stay outside the source repository')
     if out.exists(): raise ValueError('Output already exists; use a new destination')
     source={}
-    for name in ASSETS+NOTICES:
+    for name in ASSETS+SOCIAL_ASSETS+NOTICES:
         p=ROOT/name
         if p.is_symlink() or not p.is_file(): raise ValueError('Missing or linked asset: '+name)
         data=p.read_bytes()
         if (p.suffix in ('.js','.html','.webmanifest','.md') or name=='LICENSE') and re.search(rb'-----BEGIN .*PRIVATE KEY-----|sk-ant-[A-Za-z0-9_-]{16,}|AKIA[0-9A-Z]{16}',data): raise ValueError('Secret pattern in '+name)
         source[name]=data
+    image=source['ogp.png']
+    if image[:8]!=b'\x89PNG\r\n\x1a\n' or len(image)<24 or struct.unpack('>II',image[16:24])!=(1200,630): raise ValueError('OGP must be a 1200x630 PNG')
+    if len(image)>=1_000_000: raise ValueError('OGP image exceeds 1 MB')
     referenced=re.search(r'const ASSETS = \[(.*?)\];',source['sw.js'].decode(),re.S)
     cached={n.removeprefix('./') for n in re.findall(r"'([^']+)'",referenced.group(1)) if n!='./'}
     if cached!=set(ASSETS)-{'sw.js'}: raise ValueError('Service Worker asset list does not match release allow-list')
